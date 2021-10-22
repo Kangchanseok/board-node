@@ -135,6 +135,15 @@ const findSubComment = async ctx => {
   }
   
   router.get("/find/sub_comment", findSubComment);
+
+  const deleteSubComment = async ctx => {
+    const { subcomment_no } = ctx.request.body;
+    const ret = await db.deleteSubComment({ subcomment_no });
+  
+    ctx.body = ret;
+  };
+  
+  router.post("/delete/sub_comment", bodyParser(), deleteSubComment);
   
 
 app.use(router.routes())

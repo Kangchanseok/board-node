@@ -124,4 +124,12 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
   
+  self.deleteSubComment = async ({ subcomment_no }) => {
+    const query = `
+      DELETE FROM subcomment
+      WHERE subcomment_no = ? 
+    `;
+    await db.raw(query, [subcomment_no]);
+  };
+  
 module.exports = self;
