@@ -49,9 +49,16 @@ self.addUser = async ({ user_name }) => {
   
   self.findContent = async ({ content_no }) => {
     const query = `
-      SELECT * FROM content CT
-      INNER JOIN user U on U.user_no = CT.user_no
-      WHERE CT.content_no = ?
+    SELECT 
+    content_no,
+    U.user_no,
+    CT.title,
+    CT.context,
+    CT.regdate,
+    U.user_name
+    FROM content CT
+    INNER JOIN user U on U.user_no = CT.user_no
+    WHERE CT.content_no = ?
     `;
     const ret = await db.raw(query, [content_no]);
     return ret[0][0];
@@ -59,11 +66,18 @@ self.addUser = async ({ user_name }) => {
   
   self.findContentList = async () => {
     const query = `
-      SELECT * FROM content CT
-      INNER JOIN user U on U.user_no = CT.user_no
-      ORDER BY CT.regdate DESC
+    SELECT 
+    content_no,
+    U.user_no,
+    title,
+    context,
+    CT.regdate,
+    user_name
+    FROM content CT
+    INNER JOIN user U ON U.user_no = CT.user_no
+    ORDER BY CT.regdate DESC
     `;
-    const ret = await db.raw(query);
+    const ret = await db.raw(query );
     return ret[0];
   };
   
@@ -79,7 +93,14 @@ self.addUser = async ({ user_name }) => {
   
   self.findComment = async ({ content_no }) => {
     const query = `
-      SELECT * FROM comment CM
+      SELECT 
+      CM.comment_no,
+      U.user_no,
+      CM.content_no,
+      CM.context,
+      CM.regdate,
+      U.user_name
+      FROM comment CM
       INNER JOIN user U on U.user_no = CM.user_no
       WHERE CM.content_no = ?
     `;

@@ -5,8 +5,8 @@ const db = require('knex')({
       user : 'board_user',
       port : 3306,
       password : 'board',
-      timezone: 'KST',
-      database : 'board_db'
+      database : 'board_db',
+      timezone: 'KST'
     },
     // define: {
     //   timestamps: true

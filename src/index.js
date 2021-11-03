@@ -19,6 +19,7 @@ app.use(cors());
 // module.exports = Router;
 // app.use(require('connect-history-api-fallback')());
 
+
 // user
 const addUser = async ctx => {
     const {user_name} = ctx.request.body;
@@ -37,8 +38,8 @@ const findUser = async ctx => {
 // content
 
 const addContent = async ctx => {
-    const { user_no, title, context, } = ctx.request.body;
-    const ret = await db.addContent({ user_no, title, context, });
+    const { user_no, title, context} = ctx.request.body;
+    const ret = await db.addContent({ user_no, title, context});
     ctx.body = ret;
   };
   router.post("/add/content", bodyParser(), addContent);
@@ -129,4 +130,5 @@ const findSubComment = async ctx => {
 
 app.use(router.routes())
 app.use(router.allowedMethods());
+// app.use(koaBody);
 app.listen(3000);
