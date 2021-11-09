@@ -8,9 +8,6 @@ const db = require('knex')({
       database : 'board_db',
       timezone: 'KST'
     },
-    // define: {
-    //   timestamps: true
-    // }
   });
 
   

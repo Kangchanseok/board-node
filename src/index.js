@@ -130,5 +130,4 @@ const findSubComment = async ctx => {
 
 app.use(router.routes())
 app.use(router.allowedMethods());
-// app.use(koaBody);
 app.listen(3000);
