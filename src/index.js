@@ -128,6 +128,20 @@ const findSubComment = async ctx => {
   router.post("/delete/subcomment", bodyParser(), deleteSubComment);
   
 
+  // location 가져와보기
+  const findLocation = async ctx => {
+    const { loca_no } = ctx.request.query;
+    const ret = await db.findLocation({ loca_no });
+    ctx.body = ret;
+  };
+  router.get("/find/location", findLocation);
+
+  const findLocationList = async ctx => {
+    const ret = await db.findLocationList();
+    ctx.body = ret;
+  };
+  router.get("/find/location_list", findLocationList);
+
 app.use(router.routes())
 app.use(router.allowedMethods());
 app.listen(3000);

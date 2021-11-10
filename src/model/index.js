@@ -153,4 +153,28 @@ self.addUser = async ({ user_name }) => {
     await db.raw(query, [subcomment_no]);
   };
   
+
+  // location 해보기
+
+  self.findLocation = async ({ loca_no }) => {
+    const query = `
+    SELECT *
+    FROM location
+    WHERE loca_no = ?
+    `;
+    const ret = await db.raw(query, [loca_no]);
+    return ret[0][0];
+  };
+  
+  self.findLocationList = async () => {
+    const query = `
+    SELECT *
+    FROM location
+    ORDER BY loca_no 
+    `;
+    const ret = await db.raw(query );
+    return ret[0];
+  };
+
+
 module.exports = self;
