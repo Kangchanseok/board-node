@@ -177,4 +177,24 @@ self.addUser = async ({ user_name }) => {
   };
 
 
+  // locationdetail 
+  self.findLocationDetail = async ({ detail_no }) => {
+    const query = `
+    SELECT *
+    FROM locationdetail
+    WHERE detail_no = ?
+    `;
+    const ret = await db.raw(query, [detail_no]);
+    return ret[0][0];
+  };
+  
+  self.findLocationDetailList = async () => {
+    const query = `
+    SELECT *
+    FROM locationdetail
+    ORDER BY detail_no 
+    `;
+    const ret = await db.raw(query );
+    return ret[0];
+  };
 module.exports = self;

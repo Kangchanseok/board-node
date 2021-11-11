@@ -142,6 +142,20 @@ const findSubComment = async ctx => {
   };
   router.get("/find/location_list", findLocationList);
 
+  // locationdetail 
+  const findLocationDetail = async ctx => {
+    const { detail_no } = ctx.request.query;
+    const ret = await db.findLocationDetail({ detail_no });
+    ctx.body = ret;
+  };
+  router.get("/find/locationdetail", findLocationDetail);
+
+  const findLocationDetailList = async ctx => {
+    const ret = await db.findLocationDetailList();
+    ctx.body = ret;
+  };
+  router.get("/find/locationdetail_list", findLocationDetailList);
+
 app.use(router.routes())
 app.use(router.allowedMethods());
 app.listen(3000);
