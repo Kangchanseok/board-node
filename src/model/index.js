@@ -197,4 +197,27 @@ self.addUser = async ({ user_name }) => {
     const ret = await db.raw(query );
     return ret[0];
   };
+
+  // hash 
+
+  self.findHash = async ({ hash_no }) => {
+    const query = `
+    SELECT *
+    FROM hash
+    WHERE hash_no = ?
+    `;
+    const ret = await db.raw(query, [hash_no]);
+    return ret[0][0];
+  };
+  
+  self.findHashList = async () => {
+    const query = `
+    SELECT *
+    FROM hash
+    ORDER BY hash_no 
+    `;
+    const ret = await db.raw(query );
+    return ret[0];
+  };
+
 module.exports = self;
