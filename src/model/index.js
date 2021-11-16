@@ -220,4 +220,15 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
 
+  // main
+  self.findHashNo = async ({ hash_name }) => {
+    const query = `
+    SELECT hash_no
+    FROM hash
+    WHERE hash_name = ?
+    `;
+    const ret = await db.raw(query, [hash_name]);
+    return ret[0][0];
+  };
+
 module.exports = self;
