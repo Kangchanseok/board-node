@@ -178,6 +178,14 @@ const findSubComment = async ctx => {
   };
   router.get("/find/hashno", findHashNo);
 
+  // hash name 가져오기
+  const findHashName = async ctx => {
+    const { loca_no } = ctx.request.query;
+    const ret = await db.findContent({ loca_no });
+    ctx.body = ret;
+  };
+  router.get("/find/hashname", findHashName);
+
 app.use(router.routes())
 app.use(router.allowedMethods());
 app.listen(3000);

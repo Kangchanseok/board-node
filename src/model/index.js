@@ -231,4 +231,14 @@ self.addUser = async ({ user_name }) => {
     return ret[0][0];
   };
 
+  // hash name 가져오기
+  self.findHashName = async ({ loca_no }) => {
+    const query = `
+    SELECT hash_name
+    FROM hash
+    WHERE hash_no IN (SELECT hash_no FROM connection WHERE loca_no = ?)
+    `;
+    const ret = await db.raw(query, [loca_no]);
+    return ret[0][0];
+  };
 module.exports = self;
