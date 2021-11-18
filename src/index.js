@@ -102,7 +102,44 @@ const findContentList = async ctx => {
   };
   router.post("/delete/comment", bodyParser(), deleteComment);
 
+  // locationcomment
+
+  const addLocationComment = async ctx => {
+    const { user_no, loca_no, context } = ctx.request.body;
+    const ret = await db.addLocationComment({ user_no, loca_no, context });
+    ctx.body = ret;
+  }
+  router.post("/add/locationcomment", bodyParser(), addLocationComment);
+
+  const findLocationComment = async ctx => {
+    const { loca_no } = ctx.request.query;
+    const ret = await db.findLocationComment({ loca_no });
+    ctx.body = ret;
+  }
+  router.get("/find/locationcomment", findLocationComment);
+
+  const findLocationCommentList = async ctx => {
+    const ret = await db.findLocationCommentList();
+    ctx.body = ret;
+  };
+  router.get("/find/locationcomment_list", findLocationCommentList);
+
+  const modifyLocationComment = async ctx => {
+    const { context, comment_no } = ctx.request.body;
+    const ret = await db.modifyLocationComment({ context, comment_no });
+    ctx.body = ret;
+  };
+  router.post("/modify/locationcomment", bodyParser(), modifyLocationComment);
   
+  const deleteLocationComment = async ctx => {
+    const { comment_no } = ctx.request.body;
+    const ret = await db.deleteLocationComment({ comment_no });
+    ctx.body = ret;
+  };
+  router.post("/delete/locationcomment", bodyParser(), deleteLocationComment);
+
+
+
   
   // sub comment
   

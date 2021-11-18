@@ -124,6 +124,66 @@ self.addUser = async ({ user_name }) => {
     `;
     await db.raw(query, [comment_no]);
   };
+
+  // locationcomment
+
+  self.addLocationComment = async ({ user_no, loca_no, context }) => {
+    const query = `
+      INSERT INTO locationcomment
+      values (null,?, ?, ?,now())
+    `;
+    await db.raw(query, [user_no, loca_no, context]);
+  };
+  
+  self.findLocationComment = async ({ loca_no }) => {
+    const query = `
+      SELECT 
+      LC.comment_no,
+      U.user_no,
+      LC.loca_no,
+      LC.context,
+      LC.regdate,
+      U.user_name
+      FROM locationcomment LC
+      INNER JOIN user U on U.user_no = LC.user_no
+      WHERE LC.loca_no = ?
+    `;
+    const ret = await db.raw(query, [loca_no]);
+    return ret[0];
+  };
+
+  self.findLocationCommentList = async () => {
+    const query = `
+    SELECT 
+    comment_no,
+    U.user_no,
+    LC.loca_no
+    LC.context,
+    LC.regdate
+    FROM locationcomment LC
+    INNER JOIN user U ON U.user_no = LC.user_no
+    ORDER BY LC.regdate DESC
+    `;
+    const ret = await db.raw(query );
+    return ret[0];
+  };
+
+  self.modifyLocationComment = async ({ context, comment_no }) => {
+    const query = `
+      UPDATE locationcomment
+      SET  context = ?
+      WHERE comment_no = ?
+    `;
+    await db.raw(query, [ context, comment_no]);
+  };
+
+  self.deleteLocationComment = async ({ comment_no }) => {
+    const query = `
+      DELETE FROM locationcomment
+      WHERE comment_no = ? 
+    `;
+    await db.raw(query, [comment_no]);
+  };
   
   // subcomment
 
