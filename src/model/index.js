@@ -157,7 +157,7 @@ self.addUser = async ({ user_name }) => {
     SELECT 
     comment_no,
     U.user_no,
-    LC.loca_no
+    LC.loca_no,
     LC.context,
     LC.regdate
     FROM locationcomment LC
