@@ -168,7 +168,9 @@ self.addUser = async ({ user_name }) => {
   
   self.findLocationList = async () => {
     const query = `
-    SELECT *
+    SELECT loca_no,
+    title,
+    picture1
     FROM location
     ORDER BY loca_no 
     `;
@@ -239,6 +241,6 @@ self.addUser = async ({ user_name }) => {
     WHERE hash_no IN (SELECT hash_no FROM connection WHERE loca_no = ?)
     `;
     const ret = await db.raw(query, [loca_no]);
-    return ret[0][0];
+    return ret;
   };
 module.exports = self;
