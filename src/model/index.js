@@ -230,7 +230,8 @@ self.addUser = async ({ user_name }) => {
     const query = `
     SELECT loca_no,
     title,
-    picture1
+    picture1,
+    tag
     FROM location
     ORDER BY loca_no 
     `;
