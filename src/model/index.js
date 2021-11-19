@@ -228,12 +228,16 @@ self.addUser = async ({ user_name }) => {
   
   self.findLocationList = async () => {
     const query = `
-    SELECT loca_no,
-    title,
-    picture1,
-    tag
-    FROM location
-    ORDER BY loca_no 
+    select l.loca_no,
+    l.title,
+    l.picture1,
+    GROUP_CONCAT(h.hash_name separator ' ') AS hash_name
+    from location l
+    inner join connection c
+    on l.loca_no = c.loca_no 
+    inner join hash h 
+    on h.hash_no = c.hash_no
+    group by l.loca_no
     `;
     const ret = await db.raw(query );
     return ret[0];
@@ -283,6 +287,7 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
 
+  
   // main
   self.findHashNo = async ({ hash_name }) => {
     const query = `
@@ -303,5 +308,24 @@ self.addUser = async ({ user_name }) => {
     `;
     const ret = await db.raw(query, [loca_no]);
     return ret;
+  };
+
+  // select hashname
+  self.selectHashName = async ({ hash_name }) => {
+    const query = `
+    select l.loca_no,
+    l.title,
+    l.picture1,
+    GROUP_CONCAT(h.hash_name separator ' ') AS hash_name
+    from location l
+    inner join connection c
+    on l.loca_no = c.loca_no 
+    inner join hash h 
+    on h.hash_no = c.hash_no
+    group by l.loca_no
+    having hash_name LIKE '%?%'
+    `;
+    const ret = await db.raw(query, [hash_name]);
+    return ret[0];
   };
 module.exports = self;
