@@ -323,7 +323,7 @@ self.addUser = async ({ user_name }) => {
     inner join hash h 
     on h.hash_no = c.hash_no
     group by l.loca_no
-    having hash_name LIKE '%?%'
+    having hash_name LIKE CONCAT('%',?,'%')
     `;
     const ret = await db.raw(query, [hash_name]);
     return ret[0];
