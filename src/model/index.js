@@ -291,7 +291,8 @@ self.addUser = async ({ user_name }) => {
   // main
   self.findHashNo = async ({ hash_name }) => {
     const query = `
-    SELECT hash_no
+    SELECT hash_no,
+    hash_name
     FROM hash
     WHERE hash_name = ?
     `;
