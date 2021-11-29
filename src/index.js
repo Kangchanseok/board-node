@@ -232,6 +232,12 @@ const findSubComment = async ctx => {
   }
   router.get("/select/hashname", selectHashName);
 
+  // 인기게시물 가져오기
+  const popularList = async ctx => {
+    const ret = await db.popularList();
+    ctx.body = ret;
+  };
+  router.get("/find/popular_list", popularList);
   
 app.use(router.routes())
 app.use(router.allowedMethods());

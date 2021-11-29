@@ -329,4 +329,16 @@ self.addUser = async ({ user_name }) => {
     const ret = await db.raw(query, [hash_name]);
     return ret[0];
   };
+
+  // 인기게시물
+  self.popularList = async () => {
+    const query = `
+    SELECT loca_no, title, picture1
+    FROM location
+    ORDER BY heart
+    `;
+    const ret = await db.raw(query);
+    return ret[0];
+  };
+
 module.exports = self;
