@@ -201,11 +201,26 @@ const findSubComment = async ctx => {
   };
   router.get("/find/hash", findHash);
 
+  // 지역별 해시태그
   const findHashList = async ctx => {
     const ret = await db.findHashList();
     ctx.body = ret;
   };
   router.get("/find/hash_list", findHashList);
+
+  // 놀거리별 해시태그
+  const findHashList2 = async ctx => {
+    const ret = await db.findHashList2();
+    ctx.body = ret;
+  };
+  router.get("/find/hash_list2", findHashList2);
+
+  // search && location 함수
+  const findHashList3 = async ctx => {
+    const ret = await db.findHashList3();
+    ctx.body = ret;
+  };
+  router.get("/find/hash_list3", findHashList3);
 
   // mainsearch
   const findHashNo = async ctx => {

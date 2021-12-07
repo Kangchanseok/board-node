@@ -276,17 +276,40 @@ self.addUser = async ({ user_name }) => {
     const ret = await db.raw(query, [hash_no]);
     return ret[0][0];
   };
-  
+  // 지역별 해시태그
   self.findHashList = async () => {
     const query = `
     SELECT *
     FROM hash
-    ORDER BY hash_no 
+    WHERE hash_no <= 25
+    ORDER BY hash_no
     `;
     const ret = await db.raw(query );
     return ret[0];
   };
 
+  // 놀거리 종류별 해시태그
+  self.findHashList2 = async () => {
+    const query = `
+    SELECT *
+    FROM hash
+    WHERE hash_no > 25
+    ORDER BY hash_no
+    `;
+    const ret = await db.raw(query );
+    return ret[0];
+  };
+
+  // search && location을 위한 함수
+  self.findHashList3 = async () => {
+    const query = `
+    SELECT *
+    FROM hash
+    ORDER BY hash_no
+    `;
+    const ret = await db.raw(query );
+    return ret[0];
+  };
   
   // main
   self.findHashNo = async ({ hash_name }) => {
