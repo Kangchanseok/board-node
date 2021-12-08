@@ -364,4 +364,15 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
 
+  // map data
+  self.findMap = async ({ title }) => {
+    const query = `
+    SELECT *
+    FROM map
+    WHERE map_name LIKE CONCAT('%',?,'%')
+    `;
+    const ret = await db.raw(query, [title]);
+    return ret[0];
+  };
+
 module.exports = self;

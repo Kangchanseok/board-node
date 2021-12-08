@@ -253,6 +253,14 @@ const findSubComment = async ctx => {
     ctx.body = ret;
   };
   router.get("/find/popular_list", popularList);
+
+  // map data
+  const findMap = async ctx => {
+    const { title } = ctx.request.query;
+    const ret = await db.findMap({title});
+    ctx.body = ret;
+  };
+  router.get("/find/map", findMap);
   
 app.use(router.routes())
 app.use(router.allowedMethods());
