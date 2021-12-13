@@ -9,6 +9,7 @@
     "knex": "^0.95.11",
     "koa": "^2.13.3",
     "koa-body": "^4.2.0",
+    "koa-generator": "^1.1.17",
     "koa-router": "^10.1.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.13"
