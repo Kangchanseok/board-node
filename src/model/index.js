@@ -51,13 +51,13 @@ self.addUser = async ({ user_name }) => {
     const query = `
     SELECT 
     content_no,
-    U.user_no,
+    U.user_id,
     CT.title,
     CT.context,
     CT.regdate,
-    U.user_name
+    U.username
     FROM content CT
-    INNER JOIN user U on U.user_no = CT.user_no
+    INNER JOIN user U on U.user_id = CT.user_no
     WHERE CT.content_no = ?
     `;
     const ret = await db.raw(query, [content_no]);
@@ -66,15 +66,15 @@ self.addUser = async ({ user_name }) => {
   
   self.findContentList = async () => {
     const query = `
-    SELECT 
+    SELECT
     content_no,
-    U.user_no,
+    U.user_id,
     title,
     context,
     CT.regdate,
-    user_name
+    username
     FROM content CT
-    INNER JOIN user U ON U.user_no = CT.user_no
+    INNER JOIN user U ON U.user_id = CT.user_no
     ORDER BY CT.regdate DESC
     `;
     const ret = await db.raw(query );
@@ -95,13 +95,13 @@ self.addUser = async ({ user_name }) => {
     const query = `
       SELECT 
       CM.comment_no,
-      U.user_no,
+      U.user_id,
       CM.content_no,
       CM.context,
       CM.regdate,
-      U.user_name
+      U.username
       FROM comment CM
-      INNER JOIN user U on U.user_no = CM.user_no
+      INNER JOIN user U on U.user_id = CM.user_no
       WHERE CM.content_no = ?
     `;
     const ret = await db.raw(query, [content_no]);
@@ -139,13 +139,13 @@ self.addUser = async ({ user_name }) => {
     const query = `
       SELECT 
       LC.comment_no,
-      U.user_no,
+      U.user_id,
       LC.loca_no,
       LC.context,
       LC.regdate,
-      U.user_name
+      U.username
       FROM locationcomment LC
-      INNER JOIN user U on U.user_no = LC.user_no
+      INNER JOIN user U on U.user_id = LC.user_no
       WHERE LC.loca_no = ?
     `;
     const ret = await db.raw(query, [loca_no]);
@@ -156,12 +156,12 @@ self.addUser = async ({ user_name }) => {
     const query = `
     SELECT 
     comment_no,
-    U.user_no,
+    U.user_id,
     LC.loca_no,
     LC.context,
     LC.regdate
     FROM locationcomment LC
-    INNER JOIN user U ON U.user_no = LC.user_no
+    INNER JOIN user U ON U.user_id = LC.user_no
     ORDER BY LC.regdate DESC
     `;
     const ret = await db.raw(query );
