@@ -375,4 +375,15 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
 
+  // get-user-name
+  self.getusername = async ({ token }) => {
+    const query = `
+    select username
+    from user
+    where user_id = (select user_id from user_refresh_token where refresh_token = ?)
+    `;
+    const ret = await db.raw(query, [token]);
+    return ret[0];
+  };
+
 module.exports = self;

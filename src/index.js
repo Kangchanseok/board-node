@@ -261,6 +261,14 @@ const findSubComment = async ctx => {
     ctx.body = ret;
   };
   router.get("/find/map", findMap);
+
+  // get-user-name
+  const getusername = async ctx => {
+    const { token } = ctx.request.query;
+    const ret = await db.getusername({token});
+    ctx.body = ret;
+  };
+  router.get("/find/username", getusername);
   
 app.use(router.routes())
 app.use(router.allowedMethods());
