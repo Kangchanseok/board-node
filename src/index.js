@@ -262,14 +262,65 @@ const findSubComment = async ctx => {
   };
   router.get("/find/map", findMap);
 
-  // get-user-name
-  const getusername = async ctx => {
-    const { token } = ctx.request.query;
-    const ret = await db.getusername({token});
+  
+
+  // updateheart
+  const updateheart = async ctx => {
+    const { user, title } = ctx.request.body;
+    const ret = await db.updateheart({ user, title });
     ctx.body = ret;
   };
-  router.get("/find/username", getusername);
+  router.post("/updateheart", bodyParser(), updateheart);
+
+  // deleteheart
+  const deleteheart = async ctx => {
+    const { user, title } = ctx.request.body;
+    const ret = await db.deleteheart({ user, title });
+    ctx.body = ret;
+  };
+  router.post("/deleteheart", bodyParser(), deleteheart);
   
+  // selectheart
+  const selectheart = async ctx => {
+    const { user } = ctx.request.query;
+    const ret = await db.selectheart({user});
+    ctx.body = ret;
+  };
+  router.get("/selectheart", selectheart);
+
+  // getallheart
+  const getallheart = async ctx => {
+    const ret = await db.getallheart();
+    ctx.body = ret;
+  };
+  router.get("/find/getallheart", getallheart);
+
+  // 마이페이지에 고객센터 자기가 쓴 글 title, content_no 가져오기
+  const getBoard = async ctx => {
+    const { user_id } = ctx.request.query;
+    const ret = await db.getBoard({user_id});
+    ctx.body = ret;
+  };
+  router.get("/getboard", getBoard);
+
+  // 마이페이지에 좋아요 한 글 title, loca_no 가져오기
+  const getLike = async ctx => {
+    const { user_id } = ctx.request.query;
+    const ret = await db.getLike({user_id});
+    ctx.body = ret;
+  };
+  router.get("/getlike", getLike);
+
+  
+  // 회원탈퇴
+  const dropUser = async ctx => {
+    const { user_id } = ctx.request.body;
+    const ret = await db.dropUser({ user_id });
+    ctx.body = ret;
+  };
+  router.post("/dropuser", bodyParser(), dropUser);
+
+
 app.use(router.routes())
 app.use(router.allowedMethods());
 app.listen(3000);

@@ -231,6 +231,7 @@ self.addUser = async ({ user_name }) => {
     select l.loca_no,
     l.title,
     l.picture1,
+    l.liked,
     GROUP_CONCAT(h.hash_name separator ' ') AS hash_name
     from location l
     inner join connection c
@@ -340,6 +341,8 @@ self.addUser = async ({ user_name }) => {
     select l.loca_no,
     l.title,
     l.picture1,
+    l.liked,
+    l.like_color,
     GROUP_CONCAT(h.hash_name separator ' ') AS hash_name
     from location l
     inner join connection c
@@ -375,15 +378,73 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
 
-  // get-user-name
-  self.getusername = async ({ token }) => {
+  // updateheart
+  self.updateheart = async ({ user, title }) => {
     const query = `
-    select username
-    from user
-    where user_id = (select user_id from user_refresh_token where refresh_token = ?)
+    INSERT INTO heart(user_id, title) VALUES(?, ?)
     `;
-    const ret = await db.raw(query, [token]);
+    await db.raw(query, [user, title]);
+  };
+
+  // deleteheart
+  self.deleteheart = async ({ user, title }) => {
+    const query = `
+    DELETE FROM heart WHERE user_id = ? AND title = ?
+    `;
+    await db.raw(query, [user, title]);
+  };
+
+  // selectheart
+  self.selectheart = async ({ user }) => {
+    const query = `
+    SELECT * FROM heart WHERE user_id = ?
+    `;
+    const ret = await db.raw(query, [user]);
     return ret[0];
   };
+
+  // getallheart
+  self.getallheart = async () => {
+    const query = `
+    SELECT * FROM heart
+    `;
+    const ret = await db.raw(query );
+    return ret[0];
+  };
+
+  // 마이페이지 고객센터
+  self.getBoard = async ({ user_id }) => {
+    const query = `
+    select content_no,
+    title
+    from content 
+    where user_no = ?
+    `;
+    const ret = await db.raw(query, [user_id]);
+    return ret[0];
+  };
+
+  // 마이페이지 좋아요
+  self.getLike = async ({ user_id }) => {
+    const query = `
+    select loca_no,
+    title 
+    from location 
+    where title in (select title from heart where user_id = ?)
+    `;
+    const ret = await db.raw(query, [user_id]);
+    return ret[0];
+  };
+
+  // 회원탈퇴
+  self.dropUser = async ({ user_id }) => {
+    const query = `
+      DELETE 
+      FROM user 
+      WHERE user_id = ?
+    `;
+    await db.raw(query, [user_id]);
+  };
+
 
 module.exports = self;
