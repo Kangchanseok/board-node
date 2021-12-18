@@ -320,6 +320,13 @@ const findSubComment = async ctx => {
   };
   router.post("/dropuser", bodyParser(), dropUser);
 
+  const dropUserToken = async ctx => {
+    const { user_id } = ctx.request.body;
+    const ret = await db.dropUserToken({ user_id });
+    ctx.body = ret;
+  };
+  router.post("/dropusertoken", bodyParser(), dropUser);
+
 
 app.use(router.routes())
 app.use(router.allowedMethods());

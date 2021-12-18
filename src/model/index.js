@@ -416,7 +416,8 @@ self.addUser = async ({ user_name }) => {
   self.getBoard = async ({ user_id }) => {
     const query = `
     select content_no,
-    title
+    title,
+    context as category
     from content 
     where user_no = ?
     `;
@@ -424,11 +425,14 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
 
+  
+
   // 마이페이지 좋아요
   self.getLike = async ({ user_id }) => {
     const query = `
     select loca_no,
-    title 
+    title,
+    picture1 as category
     from location 
     where title in (select title from heart where user_id = ?)
     `;
@@ -436,11 +440,21 @@ self.addUser = async ({ user_name }) => {
     return ret[0];
   };
 
+
   // 회원탈퇴
   self.dropUser = async ({ user_id }) => {
     const query = `
       DELETE 
       FROM user 
+      WHERE user_id = ?
+    `;
+    await db.raw(query, [user_id]);
+  };
+
+  self.dropUserToken = async ({ user_id }) => {
+    const query = `
+      DELETE 
+      FROM user_refresh_token 
       WHERE user_id = ?
     `;
     await db.raw(query, [user_id]);
