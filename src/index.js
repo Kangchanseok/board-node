@@ -328,6 +328,13 @@ const findSubComment = async ctx => {
   router.post("/dropusertoken", bodyParser(), dropUserToken);
 
 
+  const getRandom = async ctx => {
+    const ret = await db.getRandom();
+    ctx.body = ret;
+  };
+  router.get("/getrandom", getRandom);
+
+
 app.use(router.routes())
 app.use(router.allowedMethods());
 app.listen(3000);

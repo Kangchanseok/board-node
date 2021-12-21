@@ -461,4 +461,18 @@ self.addUser = async ({ user_name }) => {
   };
 
 
+  // 랜덤 게시물
+  self.getRandom = async () => {
+    const query = `
+    select 
+    loca_no,
+    title,
+    picture1,
+    context1
+    from location
+    order by rand() limit 7
+    `;
+    const ret = await db.raw(query);
+    return ret[0];
+  };
 module.exports = self;
