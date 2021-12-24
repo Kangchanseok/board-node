@@ -1,12 +1,14 @@
+require('dotenv').config();
+
 const db = require('knex')({
     client: 'mysql',
     connection: {
       // host : '127.0.0.1',
       // host : 'noolim-project.cdhxtabtekrk.ap-northeast-2.rds.amazonaws.com',
-      host : 'springboot2-webservice.covzzjccqpoz.ap-northeast-2.rds.amazonaws.com',
-      user : 'sjoongh',
+      host : process.env.DB_HOST,
+      user : process.env.DB_USER,
       port : 3306,
-      password : 'sjh87354~',
+      password : process.env.DB_PASSWORD,
       database : 'board_db',
       timezone: 'KST'
     },
